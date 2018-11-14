@@ -7,7 +7,7 @@ provider "mongodbatlas" {
 # Create a Group
 resource "mongodbatlas_project" "poc" {
   org_id = "${var.mongodb_atlas_org_id}"
-  name = "${var.mongodb_atlas_org_name}"
+  name = "${var.mongodb_atlas_project_name}"
 }
 
 # Create a Group IP Whitelist

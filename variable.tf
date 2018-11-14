@@ -1,7 +1,7 @@
 variable "mongodb_atlas_username" {default = ""}
 variable "mongodb_atlas_api_key" {default = ""}
 variable "mongodb_atlas_org_id" {default = ""}
-variable "mongodb_atlas_org_name" {default = ""}
+variable "mongodb_atlas_project_name" {default = ""}
 variable "aws_account_id" {default = ""}
 variable "vpc_id" {default = ""}
 variable "vpc_cidr_block" { default = "" }
