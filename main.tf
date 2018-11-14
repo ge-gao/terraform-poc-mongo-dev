@@ -36,7 +36,7 @@ resource "mongodbatlas_container" "vpc-poc-1" {
 
 # Create a Cluster
 resource "mongodbatlas_cluster" "poc-dev-1" {
-  name = "${var.mongodb_cluster_name}"
+  name = "${var.mongodbatlas_cluster_name}"
   group = "${mongodbatlas_project.poc.id}"
   mongodb_major_version = "${var.mongodbatlas_cluster_mongodb_major_version}"
   provider_name = "${var.mongodbatlas_cluster_provider_name}"
