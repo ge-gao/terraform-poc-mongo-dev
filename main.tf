@@ -1,14 +1,17 @@
 # Configure the MongoDB Atlas Provider
 provider "mongodbatlas" {
+  provisioner "local-exec" {
+    command = "echo $HOME"
+  }
+
   username = "${var.mongodb_atlas_username}"
-  api_key = "${var.mongodb_atlas_api_key}"
+  api_key  = "${var.mongodb_atlas_api_key}"
 }
 
 # Create a Group 
 resource "mongodbatlas_project" "poc" {
-  
   org_id = "${var.mongodb_atlas_org_id}"
-  name = "${var.mongodb_atlas_project_name}"
+  name   = "${var.mongodb_atlas_project_name}"
 }
 
 # Create a Group IP Whitelist
@@ -20,10 +23,10 @@ resource "mongodbatlas_project" "poc" {
 
 # Create a Container
 resource "mongodbatlas_container" "vpc-poc-1" {
-  group = "${mongodbatlas_project.poc.id}"
+  group            = "${mongodbatlas_project.poc.id}"
   atlas_cidr_block = "${var.atlas_cidr_block}"
-  provider_name = "${var.provider_name}"
-  region = "${var.region}"
+  provider_name    = "${var.provider_name}"
+  region           = "${var.region}"
 }
 
 # Initiate a Peering connection
@@ -37,14 +40,14 @@ resource "mongodbatlas_container" "vpc-poc-1" {
 
 # Create a Cluster
 resource "mongodbatlas_cluster" "poc-dev-1" {
-  name = "${var.mongodbatlas_cluster_name}"
-  group = "${mongodbatlas_project.poc.id}"
+  name                  = "${var.mongodbatlas_cluster_name}"
+  group                 = "${mongodbatlas_project.poc.id}"
   mongodb_major_version = "${var.mongodbatlas_cluster_mongodb_major_version}"
-  provider_name = "${var.mongodbatlas_cluster_provider_name}"
-  region = "${var.mongodbatlas_cluster_region}"
-  size = "${var.mongodbatlas_cluster_size}"
-  backup = "${var.mongodbatlas_cluster_backup}"
-  disk_gb_enabled = "${var.mongodbatlas_cluster_disk_gb_enabled}"
+  provider_name         = "${var.mongodbatlas_cluster_provider_name}"
+  region                = "${var.mongodbatlas_cluster_region}"
+  size                  = "${var.mongodbatlas_cluster_size}"
+  backup                = "${var.mongodbatlas_cluster_backup}"
+  disk_gb_enabled       = "${var.mongodbatlas_cluster_disk_gb_enabled}"
 }
 
 # Create a Database User
@@ -52,11 +55,12 @@ resource "mongodbatlas_database_user" "read-user" {
   username = "${var.database-user-username}"
   password = "${var.database-user-password}"
   database = "${var.authn-database-name}"
-  group = "${mongodbatlas_project.poc.id}"
-  roles  = [
+  group    = "${mongodbatlas_project.poc.id}"
+
+  roles = [
     {
-      name = "${var.authn-database-role-name}"
+      name     = "${var.authn-database-role-name}"
       database = "${var.authn-database-name}"
-    }
+    },
   ]
 }
