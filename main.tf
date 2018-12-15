@@ -1,9 +1,5 @@
 # Configure the MongoDB Atlas Provider
-provider "aws" {
-  provisioner "local-exec" {
-    command = "echo $HOME"
-  }
-
+provider "mongodbatlas" {
   username = "${var.mongodb_atlas_username}"
   api_key  = "${var.mongodb_atlas_api_key}"
 }
